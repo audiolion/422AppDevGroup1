@@ -1,5 +1,9 @@
 package test;
 import static org.junit.Assert.*;
+
+import java.io.File;
+
+import main.EdgeConvertFileParser;
 import main.EdgeTable;
 
 import org.junit.Before;
@@ -13,98 +17,108 @@ EdgeTable testObject;
 	public void setUp() throws Exception{
 		testObject = new EdgeTable("1|testTable");
 	}
+	
+	@Test
+	public void testEdgeTable() {
+		assertNotNull(testObject);
+	}
 
 	@Test
-	public void testgetNumFigure(){
+	public void testGetNumFigure() {
 		assertEquals(testObject.getNumFigure(), 1);
 	}
-	
+
 	@Test
-	public void testgetName(){
+	public void testGetName() {
 		assertEquals(testObject.getName(), "testTable");
 	}
-	
+
 	@Test
-	public void testaddRelatedTable(){
+	public void testAddRelatedTable() {
 		int initialLength = testObject.getRelatedTablesArray().length;
 		testObject.addRelatedTable(16);
 		int updatedLength = testObject.getRelatedTablesArray().length;
 		assertEquals(initialLength+1, updatedLength);
 	}
-	
+
 	@Test
-	public void testaddNativeField(){
-		int initialLength = testObject.getNativeFieldsArray().length;
-		testObject.addNativeField(17);
-		int updatedLength = testObject.getNativeFieldsArray().length;
-		assertEquals(initialLength+1, updatedLength);
+	public void testGetRelatedTablesArray() {
+		assertNull(testObject.getRelatedTablesArray());
+		testObject.addRelatedTable(13);
+		assertEquals(testObject.getRelatedTablesArray().length, 1);
+		assertEquals(testObject.getRelatedTablesArray()[0], 13);
 	}
-	
+
 	@Test
-	public void testsetRelatedField(){
+	public void testGetRelatedFieldsArray() {
+		assertNull(testObject.getRelatedFieldsArray());
+		testObject.setRelatedField(1, 13);
+		assertEquals(testObject.getRelatedFieldsArray().length, 1);
+		assertEquals(testObject.getRelatedFieldsArray()[1], 13);
+	}
+
+	@Test
+	public void testSetRelatedField() {
 		testObject.setRelatedField(0, 1);
 		int[] test = testObject.getRelatedFieldsArray();
 		assertEquals(test[0], 1);
 	}
 
 	@Test
-	public void testEdgeTable() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNumFigure() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAddRelatedTable() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetRelatedTablesArray() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetRelatedFieldsArray() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetRelatedField() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetNativeFieldsArray() {
-		fail("Not yet implemented");
+		assertNull(testObject.getNativeFieldsArray());
+		testObject.addNativeField(1);
+		assertEquals(testObject.getNativeFieldsArray().length, 1);
+		assertEquals(testObject.getNativeFieldsArray()[0], 1);
 	}
 
 	@Test
 	public void testAddNativeField() {
-		fail("Not yet implemented");
+		int initialLength = testObject.getNativeFieldsArray().length;
+		testObject.addNativeField(17);
+		int updatedLength = testObject.getNativeFieldsArray().length;
+		assertEquals(initialLength+1, updatedLength);
 	}
 
 	@Test
 	public void testMoveFieldUp() {
-		fail("Not yet implemented");
+		EdgeConvertFileParser test = new EdgeConvertFileParser(new File("Courses.edg"));
+		
+		EdgeTable[] tbs = test.getEdgeTables();
+		tbs[0].addNativeField(1);
+		tbs[0].addNativeField(2);
+		tbs[0].setRelatedField(1, 2);
+		tbs[0].setRelatedField(2, 1);
+		tbs[0].makeArrays();
+		tbs[0].moveFieldUp(1);
+		assertEquals(tbs[0].getNativeFieldsArray()[0], 2);
 	}
 
 	@Test
 	public void testMoveFieldDown() {
-		fail("Not yet implemented");
+		EdgeConvertFileParser test = new EdgeConvertFileParser(new File("Courses.edg"));
+		
+		EdgeTable[] tbs = test.getEdgeTables();
+		tbs[0].addNativeField(1);
+		tbs[0].addNativeField(2);
+		tbs[0].setRelatedField(1, 2);
+		tbs[0].setRelatedField(2, 1);
+		tbs[0].makeArrays();
+		tbs[0].moveFieldDown(0);
+		assertEquals(tbs[0].getNativeFieldsArray()[1], 1);
 	}
 
 	@Test
 	public void testMakeArrays() {
-		fail("Not yet implemented");
+		testObject.addNativeField(1);
+		testObject.addNativeField(2);
+		testObject.addRelatedTable(1);
+		testObject.addRelatedTable(2);
+		testObject.makeArrays();
+		assertEquals(testObject.getRelatedFieldsArray().length, 2);
+		assertEquals(testObject.getRelatedTablesArray().length, 2);
+		assertEquals(testObject.getNativeFieldsArray().length, 2);
+		
 	}
 
 	@Test
