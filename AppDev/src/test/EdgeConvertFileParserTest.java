@@ -18,50 +18,29 @@ EdgeConvertFileParser testObject;
 	public void setUp() throws Exception {
 		testObject = new EdgeConvertFileParser(new File("Courses.edg"));
 	}
-
-	@Test
-	public void testConstructor() {
-		assertNotNull(testObject);
-	}
 	
-	@Test
-	public void testgetEdgeFields(){
-		assertNotNull(testObject.getEdgeFields());
-	}
-	
-	@Test
-	public void testgetEdgeTables(){
-		assertNotNull(testObject.getEdgeTables());
-	}
-
 	@Test
 	public void testEdgeConvertFileParser() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testParseEdgeFile() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testParseSaveFile() {
-		fail("Not yet implemented");
+		assertNotNull(testObject);
 	}
 
 	@Test
 	public void testGetEdgeTables() {
-		fail("Not yet implemented");
+		assertNotNull(testObject.getEdgeTables());
 	}
 
 	@Test
 	public void testGetEdgeFields() {
-		fail("Not yet implemented");
+		assertNotNull(testObject.getEdgeFields());
 	}
 
 	@Test
 	public void testOpenFile() {
-		fail("Not yet implemented");
+		try{
+			EdgeConvertFileParser test = new EdgeConvertFileParser(new File("Courses.edg"));
+		}catch(Exception e){
+			fail("Exception thrown: " + e.getMessage());
+		}
 	}
 
 }
