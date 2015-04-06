@@ -1,5 +1,6 @@
 package test;
 import static org.junit.Assert.*;
+import main.EdgeConvertGUI;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,38 +8,36 @@ import org.junit.Test;
 
 public class EdgeConvertGUITest {
 
+	EdgeConvertGUI testObject;
+	
 	@Before
 	public void setUp() throws Exception {
+		testObject = new EdgeConvertGUI();
 	}
 
 	@Test
 	public void testEdgeConvertGUI() {
-		fail("Not yet implemented");
+		assertNotNull(testObject);
 	}
 
 	@Test
 	public void testShowGUI() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCreateDTScreen() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCreateDRScreen() {
-		fail("Not yet implemented");
+		try{
+			testObject.showGUI();
+		}catch(Exception e){
+			fail("exception thrown: " + e.getMessage());
+		}
 	}
 
 	@Test
 	public void testSetReadSuccess() {
-		fail("Not yet implemented");
+		testObject.setReadSuccess(false);
+		assertEquals(testObject.getReadSuccess(), false);
 	}
 
 	@Test
 	public void testGetReadSuccess() {
-		fail("Not yet implemented");
+		assertEquals(testObject.getReadSuccess(), false);
 	}
 
 }
