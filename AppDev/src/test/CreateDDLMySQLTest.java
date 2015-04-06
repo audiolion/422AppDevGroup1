@@ -1,79 +1,82 @@
 package test;
 import static org.junit.Assert.*;
 
+import java.io.File;
+
+import main.CreateDDLMySQL;
+import main.EdgeConvertFileParser;
+import main.EdgeField;
+import main.EdgeTable;
+
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 
 
 public class CreateDDLMySQLTest {
-
+	
+	@Rule
+    public ExpectedException thrown = ExpectedException.none();
+	
+	EdgeConvertFileParser parser;
+	CreateDDLMySQL defaultCons;
+	CreateDDLMySQL arrayArrayCons;
+	
 	@Before
 	public void setUp() throws Exception {
+		parser = new EdgeConvertFileParser(new File("Courses.edg"));
+		defaultCons = new CreateDDLMySQL();
+		EdgeTable[] inputTables = parser.getEdgeTables();
+		for(EdgeTable table : inputTables){
+			table.makeArrays();
+		}
+		EdgeField[] inputFields = parser.getEdgeFields();
+		arrayArrayCons = new CreateDDLMySQL(inputTables, inputFields);
 	}
 
 	@Test
 	public void testGetDatabaseName() {
-		fail("Not yet implemented");
+		defaultCons.generateDatabaseName();
+		assertTrue(defaultCons.getDatabaseName().equals("MySQLDB"));
+		arrayArrayCons.generateDatabaseName();
+		assertTrue(arrayArrayCons.getDatabaseName().equals("MySQLDB"));
 	}
 
 	@Test
 	public void testGetProductName() {
-		fail("Not yet implemented");
+		assertTrue(defaultCons.getProductName().equals("MySQL"));
+		assertTrue(arrayArrayCons.getProductName().equals("MySQL"));
 	}
 
 	@Test
 	public void testGetSQLString() {
-		fail("Not yet implemented");
+		assertEquals(arrayArrayCons.getSQLString().length(), 269);
 	}
-
+	
+	
 	@Test
-	public void testCreateDDL() {
-		fail("Not yet implemented");
+	public void testGetSQLStringDefaultCons() {
+		thrown.expect(Exception.class);
+		defaultCons.getSQLString();
 	}
-
+	
 	@Test
-	public void testCreateDDLMySQLEdgeTableArrayEdgeFieldArray() {
-		fail("Not yet implemented");
+	public void testCreateDDLDefaultCons() {
+		thrown.expect(Exception.class);
+		defaultCons.createDDL();
 	}
 
 	@Test
 	public void testCreateDDLMySQL() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testConvertStrBooleanToInt() {
-		fail("Not yet implemented");
+		assertNotNull(defaultCons);
+		assertNotNull(arrayArrayCons);
 	}
 
 	@Test
 	public void testGenerateDatabaseName() {
-		fail("Not yet implemented");
+		assertTrue(defaultCons.generateDatabaseName().equals("MySQLDB"));
+		assertTrue(arrayArrayCons.generateDatabaseName().equals("MySQLDB"));
 	}
-
-	@Test
-	public void testEdgeConvertCreateDDLEdgeTableArrayEdgeFieldArray() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testEdgeConvertCreateDDL() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testInitialize() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTable() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetField() {
-		fail("Not yet implemented");
-	}
-
 }
