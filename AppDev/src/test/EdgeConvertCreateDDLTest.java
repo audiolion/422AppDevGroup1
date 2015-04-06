@@ -36,24 +36,4 @@ public class EdgeConvertCreateDDLTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	public void testGetDatabaseName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetProductName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSQLString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCreateDDL() {
-		fail("Not yet implemented");
-	}
-
 }
