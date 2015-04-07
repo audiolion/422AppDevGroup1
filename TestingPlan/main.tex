@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Software Testing Plan}
+\author{Maxwell Sweikart, Nina Yakovchits, Ryan Castner}
+\date{April 2015}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, urlcolor=cyan}
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+In this brief document we will discuss the testing plan and implementation that we have decided to use to complete the task of refactoring an existing codebase and making it as extensible as possible.
+\hfill \\
+\\ Our approach is to utilize a full suite of JUnit tests that modularize the codebase and examine all applicable methods to ensure that given an input, a specified output is achieved. In this way we will ensure the spirit of refactoring is maintained by not changing the external behavior of the code, for instance API calls or method calls that might be used by legacy systems, yet still allow for cleaner and more readable code that is more extensible to future applications and domains.
+
+\section{Test Items (Functions)}
+The following is a list of the class files to be tested by our JUnit test suite: \hfill \\
+\begin{enumerate}
+\item CreateDDLMySQL.java
+\item EdgeConnector.java
+\item EdgeConvertFileParser.java
+\item EdgeConvertGUI.java
+\item EdgeField.java
+\item EdgeTable.java
+\item ExampleFileFilter.java
+\end{enumerate}
+
+We will also update the suite to test any new classes that may come into play during the refactoring process as well as including different inputs to prove extensibility of the code.
+
+\section{Critical Functions}
+Here we will enumerate and expand upon the critical functions of each of these listed class files that must pass on each build of the project. If the JUnit tests for these cases specifically fail the code should not be pushed to production until it has been rectified. \hfill \\
+
+\begin{description}
+\item[CreateDDLMySQL] \hfill \\
+\begin{enumerate}
+\item testGetDatabaseName
+\item testGetSQLString
+\item testGenerateDatabaseName
+\end{enumerate}
+\item[EdgeConnector] \hfill \\
+\begin{enumerate}
+\item testGet* methods
+\item testSet* methods
+\end{enumerate}
+\item[EdgeConvertFileParser] \hfill \\
+\begin{enumerate}
+\item testEdgeConvertFileParser
+\item testOpenFile
+\end{enumerate}
+\item[EdgeConvertGUI] \hfill \\
+\begin{enumerate}
+\item testEdgeConvertGUI
+\item testShowGUI
+\end{enumerate}
+\item[EdgeField] \hfill \\
+\begin{enumerate}
+\item testEdgeField
+\item testGet* methods
+\item testSet* methods
+\end{enumerate}
+\item[EdgeTable] \hfill \\
+\begin{enumerate}
+\item testEdgeTable
+\item testMoveFieldUp
+\item testMoveFieldDown
+\item testMakeArrays
+\end{enumerate}
+\item[ExampleFileFilter] \hfill \\
+\begin{enumerate}
+\item testExampleFileFilter* methods
+\item testAcceptFile
+\item testAddExtension
+\item testGetExtension
+\end{enumerate}
+\end{description}
+
+\section{Approach (Strategy)}
+The overall strategy will be to use the built-in JUnit test suite functionality of the Eclipse or NetBeans IDEs to perform and check the results of the JUnit test suite. Options like ANT builds were considered but will not be used due to team preferences. \href{https://www.github.com/audiolion/422AppDevGroup1}{Github} will be used as a collaboration and version control tool for source code refactoring and for test code implementations. Any updates to functionality due to refactoring must be reflected with appropriate updates to test cases or implementations of new test cases to verify these behaviors. Furthermore, no existing tests should be broken or have to be modified due to functionality updates as that would indicate a divergence from refactoring, which is beyond the scope of our task. This document will be updated to include new test items and critical functions that must be passed in future build versions as well. These changes will be recorded by \href{https://www.github.com/audiolion/422AppDevGroup1}{github}, where this document will be hosted.
+
+\end{document}
