@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.5
+version = '1.0'
+
+sourceSets {
+  main {
+      java {
+          srcDir 'src/main'
+      }
+  }
+  test {
+      java {
+          srcDir 'src/test'
+      }
+  }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Test Build',
+                   'Implementation-Version': version
+    }
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/allTests")
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
