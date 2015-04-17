@@ -12,10 +12,11 @@ import org.junit.Test;
 
 public class EdgeTableTest {
 EdgeTable testObject;
-	
+File file;
 	@Before
 	public void setUp() throws Exception{
 		testObject = new EdgeTable("1|testTable");
+		file = new File("Courses.edg");
 	}
 	
 	@Test
@@ -82,7 +83,7 @@ EdgeTable testObject;
 
 	@Test
 	public void testMoveFieldUp() {
-		EdgeConvertFileParser test = new EdgeConvertFileParser(new File("Courses.edg"));
+		EdgeConvertFileParser test = new EdgeConvertFileParser(file);
 		
 		EdgeTable[] tbs = test.getEdgeTables();
 		tbs[0].addNativeField(1);
@@ -96,7 +97,7 @@ EdgeTable testObject;
 
 	@Test
 	public void testMoveFieldDown() {
-		EdgeConvertFileParser test = new EdgeConvertFileParser(new File("Courses.edg"));
+		EdgeConvertFileParser test = new EdgeConvertFileParser(file);
 		
 		EdgeTable[] tbs = test.getEdgeTables();
 		tbs[0].addNativeField(1);
@@ -119,11 +120,6 @@ EdgeTable testObject;
 		assertEquals(testObject.getRelatedTablesArray().length, 2);
 		assertEquals(testObject.getNativeFieldsArray().length, 2);
 		
-	}
-
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
 	}
 
 }
