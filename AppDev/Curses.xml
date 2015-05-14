@@ -1,0 +1,23 @@
+
+<edgeDiagram>
+	<figure id = "1" name = "STUDENT">
+		<attributes>
+			<attribute key = "PRIMARY">StudentSSN</attribute>
+			<attribute key = "NONE">StudentName</attribute>
+		</attributes>
+	</figure>
+
+	<figure id = "2" name = "FACULTY">
+		<attributes>
+			<attribute key = "NONE">facultyName</attribute>
+		</attributes>
+	</figure>
+
+
+	<figure id = "3" name = "COURSES">
+		<attributes>
+			<attribute key = "NONE">title</attribute>
+		</attributes>
+	</figure>
+</edgeDiagram>
+

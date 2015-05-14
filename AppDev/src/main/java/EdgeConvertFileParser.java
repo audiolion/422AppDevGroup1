@@ -3,40 +3,12 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 
-public class EdgeConvertFileParser {
+public class EdgeConvertFileParser extends fileParser{
    //private String filename = "test.edg";
-   private File parseFile;
-   private FileReader fr;
-   private BufferedReader br;
-   private String currentLine;
-   private ArrayList alTables, alFields, alConnectors;
-   private EdgeTable[] tables;
-   private EdgeField[] fields;
-   private EdgeField tempField;
-   private EdgeConnector[] connectors;
-   private String style;
-   private String text;
-   private String tableName;
-   private String fieldName;
-   private boolean isEntity, isAttribute, isUnderlined = false;
-   private int numFigure, numConnector, numFields, numTables, numNativeRelatedFields;
-   private int endPoint1, endPoint2;
-   private int numLine;
-   private String endStyle1, endStyle2;
-   public static final String EDGE_ID = "EDGE Diagram File"; //first line of .edg files should be this
-   public static final String SAVE_ID = "EdgeConvert Save File"; //first line of save files should be this
-   public static final String DELIM = "|";
+  
    
    public EdgeConvertFileParser(File constructorFile) {
-      numFigure = 0;
-      numConnector = 0;
-      alTables = new ArrayList();
-      alFields = new ArrayList();
-      alConnectors = new ArrayList();
-      isEntity = false;
-      isAttribute = false;
-      parseFile = constructorFile;
-      numLine = 0;
+      super(constructorFile);
       this.openFile(parseFile);
    }
 
@@ -288,13 +260,7 @@ public class EdgeConvertFileParser {
       return false;
    }
    
-   public EdgeTable[] getEdgeTables() {
-      return tables;
-   }
-   
-   public EdgeField[] getEdgeFields() {
-      return fields;
-   }
+  
    
    public void openFile(File inputFile) {
       try {
