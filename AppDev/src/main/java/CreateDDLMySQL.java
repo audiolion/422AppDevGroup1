@@ -7,7 +7,9 @@ import java.io.*;
 import java.util.*;
 
 public class CreateDDLMySQL extends EdgeConvertCreateDDL {
-
+   //data types much easier then having remember what number represents each data type
+   public static final int VARCHAR = 0,BOOLEAN = 1;
+   boolean empty;//check if default valie is empty
    protected String databaseName;
    //this array is for determining how MySQL refers to datatypes
    protected String[] strDataType = {"VARCHAR", "BOOL", "INT", "DOUBLE"};
@@ -39,30 +41,40 @@ public class CreateDDLMySQL extends EdgeConvertCreateDDL {
                for (int nativeFieldCount = 0; nativeFieldCount < nativeFields.length; nativeFieldCount++) { //print out the fields
                   EdgeField currentField = getField(nativeFields[nativeFieldCount]);
                   sb.append("\t" + currentField.getName() + " " + strDataType[currentField.getDataType()]);
-                  if (currentField.getDataType() == 0) { //varchar
-                     sb.append("(" + currentField.getVarcharValue() + ")"); //append varchar length in () if data type is varchar
+                  
+                 //switch statment onstead of nested if and else, much cleaner
+                  empty = currentField.getDefaultValue().equals("");
+                  switch (currentField.getDataType()){
+                      case CreateDDLMySQL.VARCHAR:
+                          sb.append("(" + currentField.getVarcharValue() + ")");//append varchar length in () if data type is varchar
+                          break;
+                      case CreateDDLMySQL.BOOLEAN:
+                          if(!empty)
+                          sb.append(" DEFAULT " + convertStrBooleanToInt(currentField.getDefaultValue()));
+                          break;
+                      default:
+                          if(!empty)
+                           sb.append(" DEFAULT " + currentField.getDefaultValue()); 
+                          break;
                   }
+                  
+                
                   if (currentField.getDisallowNull()) {
                      sb.append(" NOT NULL");
                   }
-                  if (!currentField.getDefaultValue().equals("")) {
-                     if (currentField.getDataType() == 1) { //boolean data type
-                        sb.append(" DEFAULT " + convertStrBooleanToInt(currentField.getDefaultValue()));
-                     } else { //any other data type
-                        sb.append(" DEFAULT " + currentField.getDefaultValue());
-                     }
-                  }
+                  
+                  primaryKey[nativeFieldCount]  = currentField.getIsPrimaryKey();//eliminate else statetment makes one less thing to check
                   if (currentField.getIsPrimaryKey()) {
-                     primaryKey[nativeFieldCount] = true;
                      numPrimaryKey++;
-                  } else {
-                     primaryKey[nativeFieldCount] = false;
-                  }
+                  } 
+                  
+                  
                   if (currentField.getFieldBound() != 0) {
                      numForeignKey++;
                   }
                   sb.append(",\r\n"); //end of field
                }
+               
                if (numPrimaryKey > 0) { //table has primary key(s)
                   sb.append("CONSTRAINT " + tables[tableCount].getName() + "_PK PRIMARY KEY (");
                   for (int i = 0; i < primaryKey.length; i++) {
@@ -111,9 +123,9 @@ public class CreateDDLMySQL extends EdgeConvertCreateDDL {
    
    public String generateDatabaseName() { //prompts user for database name
       String dbNameDefault = "MySQLDB";
-      //String databaseName = "";
-
-      do {
+      boolean successfulRead;
+      String toReturn;
+      //removed do while loop wqas unnessacari
          databaseName = (String)JOptionPane.showInputDialog(
                        null,
                        "Enter the database name:",
@@ -122,15 +134,10 @@ public class CreateDDLMySQL extends EdgeConvertCreateDDL {
                        null,
                        null,
                        dbNameDefault);
-         if (databaseName == null) {
-            EdgeConvertGUI.setReadSuccess(false);
-            return "";
-         }
-         if (databaseName.equals("")) {
-            JOptionPane.showMessageDialog(null, "You must select a name for your database.");
-         }
-      } while (databaseName.equals(""));
-      return databaseName;
+         //mkae this check in one line instead of multiple if statements
+         successfulRead = databaseName != null && databaseName != "";
+         EdgeConvertGUI.setReadSuccess(successfulRead);
+         return databaseName;
    }
    
    public String getDatabaseName() {

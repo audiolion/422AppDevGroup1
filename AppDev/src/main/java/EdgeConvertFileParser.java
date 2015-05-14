@@ -136,27 +136,11 @@ public class EdgeConvertFileParser {
          endPoint1 = connectors[cIndex].getEndPoint1();
          endPoint2 = connectors[cIndex].getEndPoint2();
          fieldIndex = -1;
-         for (int fIndex = 0; fIndex < fields.length; fIndex++) { //search fields array for endpoints
-            if (endPoint1 == fields[fIndex].getNumFigure()) { //found endPoint1 in fields array
-               connectors[cIndex].setIsEP1Field(true); //set appropriate flag
-               fieldIndex = fIndex; //identify which element of the fields array that endPoint1 was found in
-            }
-            if (endPoint2 == fields[fIndex].getNumFigure()) { //found endPoint2 in fields array
-               connectors[cIndex].setIsEP2Field(true); //set appropriate flag
-               fieldIndex = fIndex; //identify which element of the fields array that endPoint2 was found in
-            }
-         }
-         for (int tIndex = 0; tIndex < tables.length; tIndex++) { //search tables array for endpoints
-            if (endPoint1 == tables[tIndex].getNumFigure()) { //found endPoint1 in tables array
-               connectors[cIndex].setIsEP1Table(true); //set appropriate flag
-               table1Index = tIndex; //identify which element of the tables array that endPoint1 was found in
-            }
-            if (endPoint2 == tables[tIndex].getNumFigure()) { //found endPoint1 in tables array
-               connectors[cIndex].setIsEP2Table(true); //set appropriate flag
-               table2Index = tIndex; //identify which element of the tables array that endPoint2 was found in
-            }
-         }
          
+         //abstracted these out in case any fetaures need to be aded or take away and to eliminate redative code
+         fieldIndex = getFieldEndPointIndex(cIndex);
+         table1Index = getTabelEndPointIndex(endPoint1,tables,cIndex,1);
+         table2Index = getTabelEndPointIndex(endPoint2,tables,cIndex,2);
          if (connectors[cIndex].getIsEP1Field() && connectors[cIndex].getIsEP2Field()) { //both endpoints are fields, implies lack of normalization
             JOptionPane.showMessageDialog(null, "The Edge Diagrammer file\n" + parseFile + "\ncontains composite attributes. Please resolve them and try again.");
             EdgeConvertGUI.setReadSuccess(false); //this tells GUI not to populate JList components
@@ -191,6 +175,36 @@ public class EdgeConvertFileParser {
          }
       } // connectors for() loop
    } // resolveConnectors()
+   
+   public int getTabelEndPointIndex(int endPoint,EdgeTable[]toSearch,int cIndex,int endPointNum){//get correct index and set flags as well in connectors
+       int count = 0;
+       for(EdgeTable edgTab : toSearch){
+           if(endPoint == edgTab.getNumFigure()){
+               if(endPointNum == 1){
+                   connectors[cIndex].setIsEP1Table(true);
+               }else{
+                   connectors[cIndex].setIsEP2Table(true);
+               }
+               return count;
+           }
+       }
+        return count;
+   }
+   
+   public int getFieldEndPointIndex(int cIndex){
+        int fieldIndex = -1;
+         for (int fIndex = 0; fIndex < fields.length; fIndex++) { //search fields array for endpoints
+            if (endPoint1 == fields[fIndex].getNumFigure()) { //found endPoint1 in fields array
+               connectors[cIndex].setIsEP1Field(true); //set appropriate flag
+               fieldIndex = fIndex; //identify which element of the fields array that endPoint1 was found in
+            }
+            if (endPoint2 == fields[fIndex].getNumFigure()) { //found endPoint2 in fields array
+               connectors[cIndex].setIsEP2Field(true); //set appropriate flag
+               fieldIndex = fIndex; //identify which element of the fields array that endPoint2 was found in
+            }
+         }
+         return fieldIndex;
+   }
    
    public void parseSaveFile() throws IOException { //this method is fucked
       StringTokenizer stTables, stNatFields, stRelFields, stNatRelFields, stField;

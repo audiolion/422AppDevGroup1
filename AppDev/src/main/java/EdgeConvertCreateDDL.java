@@ -29,40 +29,40 @@ public abstract class EdgeConvertCreateDDL {
       numBoundTables = new int[tables.length];
       maxBound = 0;
       sb = new StringBuffer();
-
       for (int i = 0; i < tables.length; i++) { //step through list of tables
          int numBound = 0; //initialize counter for number of bound tables
-         int[] relatedFields = tables[i].getRelatedFieldsArray();
-         for (int j = 0; j < relatedFields.length; j++) { //step through related fields list
-            if (relatedFields[j] != 0) {
-               numBound++; //count the number of non-zero related fields
-            }
+         //for each works a little cleaner then havingto dela with two seperate iteration variablse
+         for (int val : tables[i].getRelatedFieldsArray()) { //step through related fields list 
+             //elimnate if statement  
+             numBound += val != 0?1:0; //count the number of non-zero related fields
          }
          numBoundTables[i] = numBound;
-         if (numBound > maxBound) {
-            maxBound = numBound;
-         }
+         maxBound = numBound > maxBound?numBound:maxBound; 
+         //elimnate if statment
       }
    }
    
    protected EdgeTable getTable(int numFigure) {
-      for (int tIndex = 0; tIndex < tables.length; tIndex++) {
-         if (numFigure == tables[tIndex].getNumFigure()) {
-            return tables[tIndex];
-         }
-      }
-      return null;
+       //for loop to foreach works better and cleaner
+       for(EdgeTable edgTab: tables){
+           if(numFigure == edgTab.getNumFigure())
+               return edgTab;
+       }
+       return null;
+      
    }
    
    protected EdgeField getField(int numFigure) {
-      for (int fIndex = 0; fIndex < fields.length; fIndex++) {
-         if (numFigure == fields[fIndex].getNumFigure()) {
-            return fields[fIndex];
-         }
-      }
-      return null;
+        //for loop to foreach works better and cleaner
+       for(EdgeField edgField: fields){
+           if(numFigure == edgField.getNumFigure())
+               return edgField;
+       }
+       return null;
+      
    }
 
+   //not sure what this stuff is doing?
    public abstract String getDatabaseName();
 
    public abstract String getProductName();
