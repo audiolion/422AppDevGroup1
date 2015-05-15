@@ -62,10 +62,18 @@ public class EdgeConvertXMLParser extends fileParser{
          
             
         }
-           makeArrays();
+           makeArrays2();
     }
     
-    
+        public void makeArrays2() { //convert ArrayList objects into arrays of the appropriate Class type
+      if (alTables != null) {
+         tables = (EdgeTable[])alTables.toArray(new EdgeTable[alTables.size()]);
+      }
+      if (alFields != null) {
+         fields = (EdgeField[])alFields.toArray(new EdgeField[alFields.size()]);
+      }
+     
+   }
     
     private void openXML(File file){
         try{

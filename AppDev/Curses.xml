@@ -12,8 +12,6 @@
 			<attribute key = "NONE">facultyName</attribute>
 		</attributes>
 	</figure>
-
-
 	<figure id = "2" name = "COURSES">
 		<attributes>
 			<attribute key = "NONE">title</attribute>
