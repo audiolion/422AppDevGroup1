@@ -50,6 +50,18 @@ public class fileParser {
       
    }
    
+    public void makeArrays() { //convert ArrayList objects into arrays of the appropriate Class type
+      if (alTables != null) {
+         tables = (EdgeTable[])alTables.toArray(new EdgeTable[alTables.size()]);
+      }
+      if (alFields != null) {
+         fields = (EdgeField[])alFields.toArray(new EdgeField[alFields.size()]);
+      }
+     // if (alConnectors != null) {
+      //   connectors = (EdgeConnector[])alConnectors.toArray(new EdgeConnector[alConnectors.size()]);
+     // }
+   }
+    
     public EdgeTable[] getEdgeTables() {
       return tables;
    }

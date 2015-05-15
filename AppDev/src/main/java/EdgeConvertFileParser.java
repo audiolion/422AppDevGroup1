@@ -238,17 +238,7 @@ public class EdgeConvertFileParser extends fileParser{
       }
    } // parseSaveFile()
 
-   private void makeArrays() { //convert ArrayList objects into arrays of the appropriate Class type
-      if (alTables != null) {
-         tables = (EdgeTable[])alTables.toArray(new EdgeTable[alTables.size()]);
-      }
-      if (alFields != null) {
-         fields = (EdgeField[])alFields.toArray(new EdgeField[alFields.size()]);
-      }
-      if (alConnectors != null) {
-         connectors = (EdgeConnector[])alConnectors.toArray(new EdgeConnector[alConnectors.size()]);
-      }
-   }
+  
    
    private boolean isTableDup(String testTableName) {
       for (int i = 0; i < alTables.size(); i++) {

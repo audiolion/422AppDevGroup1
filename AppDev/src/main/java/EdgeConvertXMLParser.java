@@ -31,6 +31,7 @@ public class EdgeConvertXMLParser extends fileParser{
         XMLDoc.normalizeDocument();
         NodeList nList = XMLDoc.getElementsByTagName("figure");
         EdgeTable table;
+        int fieldCount = 0;
         EdgeField field;
         for(int i = 0;i<nList.getLength();i++){
           
@@ -44,20 +45,24 @@ public class EdgeConvertXMLParser extends fileParser{
                 Node att = attList.item(j);
                 if(att.getNodeName().equals("attributes")){
                     NodeList attributeList = att.getChildNodes();
+                    fieldCount = 0;
                     for(int x =0;x<attributeList.getLength();x++){
                         Node attribute = attributeList.item(x);
                         if(attribute.getNodeName().equals("attribute")){
                             field = new EdgeField(id+DELIM+attribute.getTextContent());
-                          alFields.add(field);
+                            alFields.add(field);
+                            table.addNativeField(i);
+                            
                         }
                     }
+                   
                 }
                 
             }
-            //tables = (EdgeTable[])alTables.toArray();
-            //fields = (EdgeField[])alFields.toArray();
+         
             
         }
+           makeArrays();
     }
     
     

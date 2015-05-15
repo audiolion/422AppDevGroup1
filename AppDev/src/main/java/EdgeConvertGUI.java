@@ -1189,8 +1189,8 @@ public class EdgeConvertGUI {
                for (int i = 0; i < tables.length; i++) {
                   tables[i].makeArrays();
                }
-               fields = ecfp.getEdgeFields();
-               ecfp = null;
+               fields = test.getEdgeFields();
+               test = null;
                populateLists();
                saveFile = null;
                jmiDTSave.setEnabled(false);
