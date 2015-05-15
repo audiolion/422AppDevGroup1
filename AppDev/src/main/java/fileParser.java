@@ -57,9 +57,9 @@ public class fileParser {
       if (alFields != null) {
          fields = (EdgeField[])alFields.toArray(new EdgeField[alFields.size()]);
       }
-     // if (alConnectors != null) {
-      //   connectors = (EdgeConnector[])alConnectors.toArray(new EdgeConnector[alConnectors.size()]);
-     // }
+      if (alConnectors != null) {
+        connectors = (EdgeConnector[])alConnectors.toArray(new EdgeConnector[alConnectors.size()]);
+     }
    }
     
     public EdgeTable[] getEdgeTables() {
